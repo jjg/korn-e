@@ -20,6 +20,8 @@
 #define SOUND_RX_PIN 2
 #define SOUND_TX_PIN 3
 #define NUM_LEDS 29
+#define HOLE_SIZE 6
+
 
 // Init array for leds
 CRGB leds[NUM_LEDS];
@@ -45,7 +47,10 @@ void setup() {
   
   // Init the LEDs
   FastLED.addLeds<NEOPIXEL, LED_DATA_PIN>(leds, NUM_LEDS);
-  // TODO: Init the rangefinder
+  
+  // Init the rangefinder
+  pinMode(TRIGGER_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
   
   // Self-test each component
   
@@ -79,6 +84,7 @@ void setup() {
   Serial.println("--------------");
   //DF1201S.begin();
   DF1201S.setPrompt(false);
+  DF1201S.setPlayMode(DF1201S.SINGLE);
   Serial.print("PlayMode: ");
   Serial.println(DF1201S.getPlayMode());
   DF1201S.switchFunction(DF1201S.MUSIC);
@@ -91,7 +97,7 @@ void setup() {
   Serial.println(DF1201S.getFileName());
   DF1201S.start();
   delay(1000);
-  DF1201S.pause();
+  //DF1201S.pause();
   
   /*
   DF1201S.setPrompt(false);
@@ -108,17 +114,64 @@ void setup() {
   //DF1201S.start();
   DF1201S.playSpecFile("roar.mp3");
   */
-  
-  // TODO: Self-test rangefinder
+
+  // Self-test rangefinder
+  // Prime the sensor
+  long duration;
+  pinMode(TRIGGER_PIN, OUTPUT);
+  digitalWrite(TRIGGER_PIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIGGER_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIGGER_PIN, LOW);
+
+  // Take a reading
+  //unsigned long duration;
+  pinMode(ECHO_PIN, INPUT);
+  duration = pulseIn(ECHO_PIN, HIGH);
+  Serial.print("Distance: ");
+  Serial.println(microsecondsToInches(duration));
+
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
 
-  // TODO: Measure distance 
+  // Measure distance
+  long duration, inches;
+  pinMode(TRIGGER_PIN, OUTPUT);
+  digitalWrite(TRIGGER_PIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIGGER_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIGGER_PIN, LOW);
 
-  // TODO: Flash leds
+  // Take a reading
+  //unsigned long duration;
+  pinMode(ECHO_PIN, INPUT);
+  duration = pulseIn(ECHO_PIN, HIGH);
+  inches = microsecondsToInches(duration);
+
+  //Serial.print("Distance: ");
+  //Serial.println(inches);
   
-  // TODO: Play sound if distance is less than hole size
+  if(inches < 3){
 
+    Serial.println("Score!");
+    
+    // Flash leds
+    fill_solid( &(leds[0]), NUM_LEDS, CRGB::Red);
+    FastLED.show();
+    
+    // Play sound
+    //DF1201S.start();
+    //DF1201S.pause();
+    DF1201S.playSpecFile("T-Rex1.mp3");
+    delay(1000);
+    fill_solid( &(leds[0]), NUM_LEDS, CRGB::Black);
+    FastLED.show();
+  }
+}
+
+long microsecondsToInches(long microseconds) {
+   return microseconds / 74 / 2;
 }
