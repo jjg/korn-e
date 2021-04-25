@@ -95,7 +95,9 @@ void setup() {
   Serial.println(DF1201S.getVol());
   Serial.print("FileName: ");
   Serial.println(DF1201S.getFileName());
-  DF1201S.start();
+  //DF1201S.start();
+  DF1201S.playSpecFile("T-Rex1.mp3");
+
   delay(1000);
   //DF1201S.pause();
   
@@ -153,7 +155,14 @@ void loop() {
 
   //Serial.print("Distance: ");
   //Serial.println(inches);
-  
+
+/*
+  Serial.print("getCurTime: ");
+  Serial.println(DF1201S.getCurTime());
+  Serial.print("getTotalTime: ");
+  Serial.println(DF1201S.getTotalTime());
+*/
+
   if(inches < 3){
 
     Serial.println("Score!");
@@ -161,12 +170,16 @@ void loop() {
     // Flash leds
     fill_solid( &(leds[0]), NUM_LEDS, CRGB::Red);
     FastLED.show();
+
+    // Only play a sound if the previously playing sound is done
+    if(DF1201S.getCurTime() == DF1201S.getTotalTime()){
+      // Play sound
+      //DF1201S.start();
+      //DF1201S.pause();
+      DF1201S.playSpecFile("T-Rex1.mp3");
+    }
     
-    // Play sound
-    //DF1201S.start();
-    //DF1201S.pause();
-    DF1201S.playSpecFile("T-Rex1.mp3");
-    delay(1000);
+    delay(500);
     fill_solid( &(leds[0]), NUM_LEDS, CRGB::Black);
     FastLED.show();
   }
