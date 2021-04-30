@@ -15,7 +15,7 @@
  */
 
 // Enables/disables debugging over serial
-#define DEBUG true
+#define DEBUG false
 
 #define TRIGGER_PIN 6
 #define ECHO_PIN 7
