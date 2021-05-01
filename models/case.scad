@@ -1,3 +1,5 @@
+include <ping_sensor_mount.scad>
+
 // LED strip 5x13
 
 // TODO: Cut-out and mount for range sensor
@@ -9,7 +11,7 @@ LED_STRIP_HEIGHT = 5;
 LED_STRIP_LENGTH = 0;           // no idea yet
 BOARD_THICKNESS = 6.35;         // .25"
 LED_BRACKET_THICKNESS = 5;
-LED_COUNT = 50;                 // Determines the number and width of brackets
+LED_COUNT = 29;                 // Determines the number and width of brackets
 ELECTRONICS_BOX_LENGTH = 100;   // guess
 ELECTRONICS_BOX_WIDTH = 100;    // guess
 ELECTRONICS_BOX_HEIGHT = 30;    // guess
@@ -47,7 +49,7 @@ difference(){
         ]);
     }
     translate([0,0,LED_STRIP_WIDTH]){
-        #cylinder(
+        cylinder(
             r=(HOLE_DIAMETER/2)+LED_STRIP_HEIGHT+LED_BRACKET_THICKNESS+WALL_THICKNESS,
             h=LED_STRIP_WIDTH*2
         );
@@ -58,7 +60,7 @@ difference(){
         for (i=[1:LED_COUNT]){
             rotate([0,0,(360/LED_COUNT)*i]){
                 translate([(HOLE_DIAMETER/2)-1, -5/2, 0]){
-                    #cube([LED_BRACKET_THICKNESS*2, 5, LED_STRIP_WIDTH]);
+                    #cube([LED_BRACKET_THICKNESS*2, 10, LED_STRIP_WIDTH]);
                 }
             }
         }
@@ -71,5 +73,21 @@ difference(){
             cylinder(r=(HOLE_DIAMETER/2)+LED_BRACKET_THICKNESS, h=LED_STRIP_WIDTH);
         }
     }
+    
+    // Sensor opening
+    translate([(HOLE_DIAMETER/2)-4,(-45.35/2),WALL_THICKNESS]){
+        #cube([15,48,20.38]);
+    }
 }
+
+// Electronics mounting parts
+
+// Sensor
+translate([(HOLE_DIAMETER/2)+2,(-45.35/2),20.38+WALL_THICKNESS+1]){
+    rotate([-90,0,0]){
+        ping_sensor_mount();
+    }
+}
+
+
 
