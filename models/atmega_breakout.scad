@@ -1,6 +1,7 @@
 module atmega_breakout(){
-    LENGTH = 20;    // guess
-    WIDTH = 10;     // guess
+    
+    LENGTH = 46;
+    WIDTH = 24;
     DEPTH = 5;      // default
     
     cube([LENGTH, WIDTH, DEPTH]);

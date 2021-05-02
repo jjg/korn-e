@@ -1,4 +1,6 @@
 include <ping_sensor_mount.scad>
+include <atmega_breakout_clamp.scad>
+include <df_player_pro_mount.scad>
 
 // LED strip 5x13
 
@@ -83,12 +85,12 @@ difference(){
         #cube([15,47,20.38]);
     }
     
-    // TODO: Power input hole
+    // TODO: Power input hole (8mm)
     // TODO: External LED cable hole
     // TODO: Speaker output hole
 }
 
-// Electronics mounting parts
+// Mounting points
 
 // Sensor
 translate([(HOLE_DIAMETER/2)+2.5,-(45.35/2),20.38+WALL_THICKNESS+1]){
@@ -97,8 +99,18 @@ translate([(HOLE_DIAMETER/2)+2.5,-(45.35/2),20.38+WALL_THICKNESS+1]){
     }
 }
 
-// TODO: Sound board mount
-// TODO: Atmega board mount
+// Sound board mount
+translate([(HOLE_DIAMETER/2+65),20,2]){
+    df_player_pro_mount();
+}
+
+// Atmega board mount
+// NOTE: Only for example, print separately!
+translate([(HOLE_DIAMETER/2)+40,-30,2]){
+    atmega_breakout_clamp();
+}
+
+// TODO: Mounting holes (for mounting to board)
 
 
 
