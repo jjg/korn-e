@@ -1,9 +1,11 @@
 module df_player_pro_mount(){
     
+    $fn=50;
+    
     LENGTH = 24.5;
     WIDTH = 23;
     DEPTH = 3;
-    MOUNTING_POST_DIAMETER = 4;
+    MOUNTING_POST_DIAMETER = 5;
     MOUNTING_HOLE_DIAMETER = 3;
     
     difference(){
