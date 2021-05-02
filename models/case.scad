@@ -6,7 +6,7 @@ include <ping_sensor_mount.scad>
 
 WALL_THICKNESS = 5;
 HOLE_DIAMETER = 152.4;          // 6"
-LED_STRIP_WIDTH = 13;
+LED_STRIP_WIDTH = 30; //13;
 LED_STRIP_HEIGHT = 5;
 LED_STRIP_LENGTH = 0;           // no idea yet
 BOARD_THICKNESS = 6.35;         // .25"
@@ -82,6 +82,10 @@ difference(){
     translate([(HOLE_DIAMETER/2)-6,-(45.35/2),WALL_THICKNESS]){
         #cube([15,47,20.38]);
     }
+    
+    // TODO: Power input hole
+    // TODO: External LED cable hole
+    // TODO: Speaker output hole
 }
 
 // Electronics mounting parts
@@ -92,6 +96,9 @@ translate([(HOLE_DIAMETER/2)+2.5,-(45.35/2),20.38+WALL_THICKNESS+1]){
         ping_sensor_mount();
     }
 }
+
+// TODO: Sound board mount
+// TODO: Atmega board mount
 
 
 
