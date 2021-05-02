@@ -2,24 +2,19 @@ include <ping_sensor_mount.scad>
 include <atmega_breakout_clamp.scad>
 include <df_player_pro_mount.scad>
 
-// LED strip 5x13
-
-// TODO: Cut-out and mount for range sensor
 
 WALL_THICKNESS = 5;
-HOLE_DIAMETER = 152.4;          // 6"
-LED_STRIP_WIDTH = 30; //13;
+HOLE_DIAMETER = 152.4;
+LED_STRIP_WIDTH = 30;
 LED_STRIP_HEIGHT = 5;
-LED_STRIP_LENGTH = 0;           // no idea yet
-BOARD_THICKNESS = 6.35;         // .25"
 LED_BRACKET_THICKNESS = 5;
-LED_COUNT = 29;                 // Determines the number and width of brackets
-ELECTRONICS_BOX_LENGTH = 100;   // guess
-ELECTRONICS_BOX_WIDTH = 100;    // guess
-ELECTRONICS_BOX_HEIGHT = 30;    // guess
+LED_COUNT = 29;                     // Determines the number and width of brackets
+ELECTRONICS_BOX_LENGTH = 100;
+ELECTRONICS_BOX_WIDTH = 100;
+ELECTRONICS_BOX_HEIGHT = 30;
 MOUNTING_HOLE_COUNT = 6;
-MOUNTING_SCREW_SHAFT_DIAMETER = 5;  // guess
-MOUNTING_SCREW_LENGTH = 40;  // guess
+MOUNTING_SCREW_SHAFT_DIAMETER = 5;  // guess, select and measure actual part
+MOUNTING_SCREW_LENGTH = 40;         // guess, select and measure actual part
 
 difference(){
 
