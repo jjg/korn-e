@@ -22,7 +22,7 @@ module ping_sensor_mount(){
         rotate([0,-90,0]){
             difference(){
                 // mounting plate
-                cube([sensor_width + 2, sensor_height + 2, 2]);
+                cube([sensor_width + 2, sensor_height + 2, 2.5]);
 
                 // barrel holes
                 translate([barrel_edge+(barrel_diameter/2)+1,barrel_edge+(barrel_diameter/2)+1,-1]){

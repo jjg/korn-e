@@ -48,19 +48,23 @@ difference(){
             ELECTRONICS_BOX_HEIGHT-WALL_THICKNESS
         ]);
     }
+    
+    // Big circle cut-out (?)
+    /*
     translate([0,0,LED_STRIP_WIDTH]){
-        cylinder(
+        #cylinder(
             r=(HOLE_DIAMETER/2)+LED_STRIP_HEIGHT+LED_BRACKET_THICKNESS+WALL_THICKNESS,
             h=LED_STRIP_WIDTH*2
         );
     }
+    */
 
     // LED openings
     translate([0,0,WALL_THICKNESS]){
         for (i=[1:LED_COUNT]){
             rotate([0,0,(360/LED_COUNT)*i]){
                 translate([(HOLE_DIAMETER/2)-1, -5/2, 0]){
-                    #cube([LED_BRACKET_THICKNESS*2, 10, LED_STRIP_WIDTH]);
+                    cube([LED_BRACKET_THICKNESS*2, 10, LED_STRIP_WIDTH]);
                 }
             }
         }
@@ -75,15 +79,15 @@ difference(){
     }
     
     // Sensor opening
-    translate([(HOLE_DIAMETER/2)-4,(-45.35/2),WALL_THICKNESS]){
-        #cube([15,48,20.38]);
+    translate([(HOLE_DIAMETER/2)-6,-(45.35/2),WALL_THICKNESS]){
+        #cube([15,47,20.38]);
     }
 }
 
 // Electronics mounting parts
 
 // Sensor
-translate([(HOLE_DIAMETER/2)+2,(-45.35/2),20.38+WALL_THICKNESS+1]){
+translate([(HOLE_DIAMETER/2)+2.5,-(45.35/2),20.38+WALL_THICKNESS+1]){
     rotate([-90,0,0]){
         ping_sensor_mount();
     }
