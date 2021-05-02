@@ -17,6 +17,9 @@ LED_COUNT = 29;                 // Determines the number and width of brackets
 ELECTRONICS_BOX_LENGTH = 100;   // guess
 ELECTRONICS_BOX_WIDTH = 100;    // guess
 ELECTRONICS_BOX_HEIGHT = 30;    // guess
+MOUNTING_HOLE_COUNT = 6;
+MOUNTING_SCREW_SHAFT_DIAMETER = 5;  // guess
+MOUNTING_SCREW_LENGTH = 40;  // guess
 
 difference(){
 
@@ -110,7 +113,39 @@ translate([(HOLE_DIAMETER/2)+40,-30,2]){
     atmega_breakout_clamp();
 }
 
-// TODO: Mounting holes (for mounting to board)
+// Mounting holes (for mounting to board)
+translate([0,0,0]){
+    for (i=[1:MOUNTING_HOLE_COUNT]){
+        rotate([0,0,(360/MOUNTING_HOLE_COUNT)*i]){
+            translate([(HOLE_DIAMETER/2)+LED_STRIP_HEIGHT+LED_BRACKET_THICKNESS+WALL_THICKNESS+2, -5/2, 0]){
+                // Skip the one that lands inside the electronics box.
+                if(i!=MOUNTING_HOLE_COUNT){
+                    difference(){
+                        cylinder(r=(MOUNTING_SCREW_SHAFT_DIAMETER+WALL_THICKNESS)/2,h=ELECTRONICS_BOX_HEIGHT);
+                        
+                        cylinder(r=(MOUNTING_SCREW_SHAFT_DIAMETER)/2,h=MOUNTING_SCREW_LENGTH);
 
+                        //cube([LED_BRACKET_THICKNESS*2, 10, LED_STRIP_WIDTH]);
+                    }
+                }
+            }
+        }
+    }
+}
 
+translate([(HOLE_DIAMETER/2)+ELECTRONICS_BOX_LENGTH-MOUNTING_SCREW_SHAFT_DIAMETER-WALL_THICKNESS,(ELECTRONICS_BOX_WIDTH/2)+3,0]){
+    difference(){
+        cylinder(r=(MOUNTING_SCREW_SHAFT_DIAMETER+WALL_THICKNESS)/2,h=ELECTRONICS_BOX_HEIGHT);
+        
+        cylinder(r=(MOUNTING_SCREW_SHAFT_DIAMETER)/2,h=MOUNTING_SCREW_LENGTH);
+    }
+}
+
+translate([(HOLE_DIAMETER/2)+ELECTRONICS_BOX_LENGTH-MOUNTING_SCREW_SHAFT_DIAMETER-WALL_THICKNESS,-(ELECTRONICS_BOX_WIDTH/2)-3,0]){
+    difference(){
+        cylinder(r=(MOUNTING_SCREW_SHAFT_DIAMETER+WALL_THICKNESS)/2,h=ELECTRONICS_BOX_HEIGHT);
+        
+        cylinder(r=(MOUNTING_SCREW_SHAFT_DIAMETER)/2,h=MOUNTING_SCREW_LENGTH);
+    }
+}
 
