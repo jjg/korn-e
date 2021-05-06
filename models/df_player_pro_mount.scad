@@ -6,7 +6,7 @@ module df_player_pro_mount(){
     WIDTH = 23;
     DEPTH = 3;
     MOUNTING_POST_DIAMETER = 5;
-    MOUNTING_HOLE_DIAMETER = 3;
+    MOUNTING_HOLE_DIAMETER = 2.5;
     
     difference(){
         

@@ -5,7 +5,7 @@ include <df_player_pro_mount.scad>
 
 WALL_THICKNESS = 5;
 HOLE_DIAMETER = 152.4;
-LED_STRIP_WIDTH = 45; //30;
+LED_STRIP_WIDTH = 45; //30;         // TODO: Make sure there's still enough room for the LED strip now before printing!
 LED_STRIP_HEIGHT = 5;
 LED_BRACKET_THICKNESS = 5;
 LED_COUNT = 29;                     // Determines the number and width of brackets
@@ -77,14 +77,14 @@ difference(){
     // Note: lift above the sensor height (20.38)
     translate([0,0,WALL_THICKNESS+20.38]){
         difference(){
-            #cylinder(r=(HOLE_DIAMETER/2)+LED_STRIP_HEIGHT+LED_BRACKET_THICKNESS, h=LED_STRIP_WIDTH);
+            cylinder(r=(HOLE_DIAMETER/2)+LED_STRIP_HEIGHT+LED_BRACKET_THICKNESS, h=LED_STRIP_WIDTH);
             cylinder(r=(HOLE_DIAMETER/2)+LED_BRACKET_THICKNESS, h=LED_STRIP_WIDTH);
         }
     }
     
     // Sensor opening
     translate([(HOLE_DIAMETER/2)-6,-(45.35/2),WALL_THICKNESS]){
-        #cube([15,47,20.38]);
+        cube([15,47,ELECTRONICS_BOX_HEIGHT]);
     }
     
     // TODO: Power input hole (8mm)
@@ -108,9 +108,11 @@ translate([(HOLE_DIAMETER/2+65),20,2]){
 
 // Atmega board mount
 // NOTE: Only for example, print separately!
+/*
 translate([(HOLE_DIAMETER/2)+40,-30,2]){
     atmega_breakout_clamp();
 }
+*/
 
 // Mounting holes (for mounting to board)
 translate([0,0,0]){
