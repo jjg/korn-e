@@ -2,16 +2,21 @@ include <ping_sensor_mount.scad>
 include <atmega_breakout_clamp.scad>
 include <df_player_pro_mount.scad>
 
+// Actual LED strip width: 12.75mm
+// Actual deck thickness 12.7mm (0.5 inches)
 
+$fn=50;
+
+HEIGHT = 45;
 WALL_THICKNESS = 5;
 HOLE_DIAMETER = 152.4;
-LED_STRIP_WIDTH = 45; //30;         // TODO: Make sure there's still enough room for the LED strip now before printing!
+LED_STRIP_WIDTH = 45;
 LED_STRIP_HEIGHT = 5;
 LED_BRACKET_THICKNESS = 5;
 LED_COUNT = 29;                     // Determines the number and width of brackets
 ELECTRONICS_BOX_LENGTH = 100;
 ELECTRONICS_BOX_WIDTH = 120;
-ELECTRONICS_BOX_HEIGHT = 45; //30;
+ELECTRONICS_BOX_HEIGHT = 45;
 MOUNTING_HOLE_COUNT = 6;
 MOUNTING_SCREW_HEAD_DIAMETER = 8.4; //8.38;
 MOUNTING_SCREW_SHAFT_DIAMETER = 4; //3.83;
@@ -36,7 +41,9 @@ difference(){
     }
 
     // corn hole
-    cylinder(r=HOLE_DIAMETER/2, h=LED_STRIP_WIDTH);
+    translate([0,0,-1]){
+        cylinder(r=HOLE_DIAMETER/2, h=HEIGHT+2);
+    }
 
     // electronics box openings
     translate([
@@ -44,10 +51,10 @@ difference(){
         -(ELECTRONICS_BOX_WIDTH-WALL_THICKNESS)/2,
         WALL_THICKNESS
     ]){
-        #cube([
+        cube([
             ELECTRONICS_BOX_LENGTH-WALL_THICKNESS-10,
             ELECTRONICS_BOX_WIDTH-WALL_THICKNESS,
-            ELECTRONICS_BOX_HEIGHT-WALL_THICKNESS
+            ELECTRONICS_BOX_HEIGHT-WALL_THICKNESS+1
         ]);
     }
     
@@ -102,7 +109,7 @@ translate([(HOLE_DIAMETER/2)+2.5,-(45.35/2),20.38+WALL_THICKNESS+1]){
 }
 
 // Sound board mount
-translate([(HOLE_DIAMETER/2+65),20,2]){
+translate([(HOLE_DIAMETER/2+60),20,2]){
     df_player_pro_mount();
 }
 

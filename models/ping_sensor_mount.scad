@@ -26,10 +26,10 @@ module ping_sensor_mount(){
 
                 // barrel holes
                 translate([barrel_edge+(barrel_diameter/2)+1,barrel_edge+(barrel_diameter/2)+1,-1]){
-                    #cylinder(r=barrel_diameter/2+.1,h=barrel_height,$fn=50);
+                    cylinder(r=barrel_diameter/2+.1,h=barrel_height,$fn=50);
                 }
                 translate([barrel_edge + barrel_between + barrel_diameter + (barrel_diameter/2)+1,barrel_edge+(barrel_diameter/2)+1,-1]){
-                    #cylinder(r=barrel_diameter/2+.1,h=barrel_height,$fn=50);
+                    cylinder(r=barrel_diameter/2+.1,h=barrel_height,$fn=50);
                 }
             }
         }
@@ -42,11 +42,11 @@ module ping_sensor_mount(){
                     
                     rotate([0,90,0]){
                         translate([-(sensor_width/2)+(sensor_width/4),flange_length/2,-flange_depth/2]){
-                            #cylinder(r=1.5,h=flange_depth+2, $fn=20);
+                            cylinder(r=1.5,h=flange_depth+2, $fn=20);
                         }
 
                         translate([-(sensor_width/2)-(sensor_width/4),flange_length/2,-flange_depth/2]){
-                            #cylinder(r=1.5,h=flange_depth+2, $fn=20);
+                            cylinder(r=1.5,h=flange_depth+2, $fn=20);
                         }
                     }
                 }
