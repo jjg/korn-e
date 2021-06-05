@@ -19,15 +19,18 @@
 
 #define TRIGGER_PIN 6
 #define ECHO_PIN 7
-#define LED_DATA_PIN 5
+#define INSIDE_LED_DATA_PIN 5
+#define OUTSIDE_LED_DATA_PIN 8
 #define SOUND_RX_PIN 2
 #define SOUND_TX_PIN 3
-#define NUM_LEDS 29
+#define NUM_INSIDE_LEDS 29
+#define NUM_OUTSIDE_LEDS 240
 #define HOLE_SIZE 3
 
 
 // Init array for leds
-CRGB leds[NUM_LEDS];
+CRGB inside_leds[NUM_INSIDE_LEDS];
+CRGB outside_leds[NUM_OUTSIDE_LEDS];
 
 // Init serial connection to sound board
 SoftwareSerial DF1201SSerial(SOUND_RX_PIN, SOUND_TX_PIN);
@@ -58,7 +61,8 @@ void setup() {
   DF1201S.setVol(20);
   
   // Init LEDs
-  FastLED.addLeds<NEOPIXEL, LED_DATA_PIN>(leds, NUM_LEDS);
+  FastLED.addLeds<NEOPIXEL, INSIDE_LED_DATA_PIN>(inside_leds, NUM_INSIDE_LEDS);
+  FastLED.addLeds<NEOPIXEL, OUTSIDE_LED_DATA_PIN>(outside_leds, NUM_OUTSIDE_LEDS);
   
   // Init rangefinder
   pinMode(TRIGGER_PIN, OUTPUT);
@@ -75,10 +79,14 @@ void setup() {
   /*** Self-test each component ***/
 
   // Self-test LEDs
-  fill_solid( &(leds[0]), NUM_LEDS, CRGB::Green);
+  // inside
+  fill_solid( &(inside_leds[0]), NUM_INSIDE_LEDS, CRGB::Green);
+  // outside
+  fill_solid( &(outside_leds[0]), NUM_OUTSIDE_LEDS, CRGB::Green);
   FastLED.show();
   delay(1000);
-  fill_solid( &(leds[0]), NUM_LEDS, CRGB::Black);
+  fill_solid( &(inside_leds[0]), NUM_INSIDE_LEDS, CRGB::Black);
+  fill_solid( &(outside_leds[0]), NUM_OUTSIDE_LEDS, CRGB::Black);
   FastLED.show();
   delay(1000);
 
@@ -109,6 +117,11 @@ void setup() {
     Serial.println(microsecondsToInches(duration));
   }
 
+  // Set initial LED state
+  fill_solid( &(inside_leds[0]), NUM_INSIDE_LEDS, CRGB::Black);
+  fill_solid( &(outside_leds[0]), NUM_OUTSIDE_LEDS, CRGB::Red);
+  FastLED.show();
+
 }
 
 void loop() {
@@ -132,13 +145,14 @@ void loop() {
     Serial.println(inches);
   }
 
-  if(inches < HOLE_SIZE){
+  if(inches == HOLE_SIZE){
 
     if(DEBUG)
       Serial.println("Score!");
     
     // Flash leds
-    fill_solid( &(leds[0]), NUM_LEDS, CRGB::Red);
+    fill_solid( &(inside_leds[0]), NUM_INSIDE_LEDS, CRGB::Red);
+    fill_solid( &(outside_leds[0]), NUM_OUTSIDE_LEDS, CRGB::Black);
     FastLED.show();
 
     // Play score sound (only play a sound if the previously playing sound is done)
@@ -155,9 +169,19 @@ void loop() {
     if(DF1201S.getTotalTime() - DF1201S.getCurTime() < 2){
       DF1201S.playSpecFile("/fx/score.mp3");
     }
+
+    // Move dot around outside LEDs
+    for(int dot = 0; dot < NUM_OUTSIDE_LEDS; dot++) { 
+        outside_leds[dot] = CRGB::Red;
+        FastLED.show();
+        // clear this led for the next time around the loop
+        outside_leds[dot] = CRGB::Black;
+        delay(10);
+    }
     
     delay(500);
-    fill_solid( &(leds[0]), NUM_LEDS, CRGB::Black);
+    fill_solid( &(inside_leds[0]), NUM_INSIDE_LEDS, CRGB::Black);
+    fill_solid( &(outside_leds[0]), NUM_OUTSIDE_LEDS, CRGB::Red);
     FastLED.show();
   }
 
